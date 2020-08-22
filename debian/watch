@@ -1,0 +1,2 @@
+version=4
+https://github.com/ukui/time-shutdown/releases .*/time-shutdown_(\d\S+)\.orig\.tar\.gz

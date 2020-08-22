@@ -1,0 +1,6 @@
+96e3b41554a516941357c2ace67281d9  usr/lib/ukui-notification-daemon/time-shutdown
+c8aa533b7655f31c4360dbda39058975  usr/share/applications/ukui-time-shotdown.desktop
+a281529ce76660f67a7ed2d8781a17bb  usr/share/doc/time-shutdown/changelog.Debian.gz
+4a81845f7aba2639cdc2958350f65859  usr/share/doc/time-shutdown/copyright
+bb1de6947ade422f34ffb8f8a92d618b  usr/share/glib-2.0/schemas/org.ukui.time.shutdown.settings.gschema.xml
+b9c794e6b3f95e3066a7fbb7196ae8a1  usr/share/ukui-time-shutdown/time-shutdown_zh_CN.qm

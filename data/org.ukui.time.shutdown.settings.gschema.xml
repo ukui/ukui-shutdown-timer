@@ -1,0 +1,20 @@
+<schemalist gettext-domain="ukui-time-shutdown">
+     <schema id="org.ukui.time-shutdwon.settings"  path="/org/ukui/time-shotdown/settings/">
+        <key name="shutdowntime" type="s">
+            <default>""</default>
+            <summary>shutdown-time</summary>
+            <description>the shutdown time set by program</description>
+        </key>
+        <key name="shutdownfrequency" type="s">
+            <default>""</default>
+            <summary>shutdown frequency</summary>
+            <description>the shutdown frequency set by program</description>
+        </key>
+        <key name="timeshutdown" type="b">
+            <default>false</default>
+            <summary>shutdown frequency</summary>
+            <description>the shutdown frequency set by program</description>
+        </key>
+    </schema>
+</schemalist>
+

@@ -1,0 +1,27 @@
+Source: time-shutdown
+Section: x11
+Priority: optional
+Maintainer: Kylin Team <team+kylin@tracker.debian.org>
+Uploaders: handsome_feng <jianfengli@ubuntukylin.com>,
+Build-Depends: debhelper-compat (= 12),
+               libglib2.0-dev,
+               qtbase5-dev,
+               libqt5svg5-dev,
+               qttools5-dev-tools,
+	       libgsettings-qt-dev,
+               libx11-dev,
+
+Standards-Version: 4.5.0
+Rules-Requires-Root: no
+Homepage: https://github.com/ukui/time-shutdown.git
+Vcs-Git: https://github.com/ukui/time-shutdown.git
+Vcs-Browser: https://github.com/ukui/time-shutdown
+Package: time-shutdown
+Architecture: any
+Depends: ${shlibs:Depends},
+         ${misc:Depends}
+Description: parallels toolbox for UKUI
+ The time-shutdown is mainly used in the desktop operating system.
+ Timed shutdown program The shutdown frequency can be selected. 
+ When the time is set, the shutdown interface will be triggered 
+ and a notification popup will be sent. You can select, postpone and set.

@@ -1,0 +1,19 @@
+[Desktop Entry]
+Name=Clock
+Name[zh_CN]=定时关机
+Name[tr_TR]=time-shutdown
+GenericName=Kylin time shutdown
+GenericName[zh_CN]=定时关机
+GenericName[tr_TR]=
+Comment=Ukui time shutdown
+Comment[zh_CN]= =定时关机
+Comment[tr_TR]=Ukui Çalar Saat
+Keywords=guide;
+Exec=/usr/bin/time-shutdown
+Icon=kylin-alarm-clock
+Terminal=false
+Type=Application
+NoDisplay=false
+Categories=System;Utility;
+StartupNotify=false
+

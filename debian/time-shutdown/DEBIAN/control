@@ -1,0 +1,14 @@
+Package: time-shutdown
+Version: 1.1.0-1-0001
+Architecture: amd64
+Maintainer: Kylin Team <team+kylin@tracker.debian.org>
+Installed-Size: 153
+Depends: libc6 (>= 2.4), libgcc-s1 (>= 3.0), libgsettings-qt1 (>= 0.1+14.04.20140408), libqt5core5a (>= 5.12.2), libqt5gui5 (>= 5.8.0) | libqt5gui5-gles (>= 5.8.0), libqt5widgets5 (>= 5.9.0~beta), libstdc++6 (>= 4.1.1), dconf-gsettings-backend | gsettings-backend
+Section: x11
+Priority: optional
+Homepage: https://github.com/liushanwen1997/time-shutdown.git
+Description: parallels toolbox for UKUI
+ The time-shutdown is mainly used in the desktop operating system.
+ Timed shutdown program The shutdown frequency can be selected.
+ When the time is set, the shutdown interface will be triggered
+ and a notification popup will be sent. You can select, postpone and set.
