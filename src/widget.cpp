@@ -488,10 +488,16 @@ QString Widget::GetCalculateTimeDifference(QString weekselect)
         // 今天之前
     } else if (nextCurrenttmp == currentTmp &&
                timeHours >= m_pTimeShowWidget->m_pHourRollWidget->readValue()) {
-        hour = 24 * (7 - (currentTmp - nextCurrenttmp));
+        if (m_pTimeShowWidget->m_pMinuteRollWidget->readValue() >= timeMinute) {
+            hour = m_pTimeShowWidget->m_pHourRollWidget->readValue() - timeHours;
+        } else {
+            hour = 24 * (7 - (currentTmp - nextCurrenttmp));
+        }
+        qDebug() << "123123123121111111";
     } else if (nextCurrenttmp == currentTmp &&
                timeHours < m_pTimeShowWidget->m_pHourRollWidget->readValue()) {
         hour = m_pTimeShowWidget->m_pHourRollWidget->readValue() - timeHours;
+        qDebug() << "12312312312";
     }
 
     if (timeMinute > m_pTimeShowWidget->m_pMinuteRollWidget->readValue()) {
@@ -500,12 +506,6 @@ QString Widget::GetCalculateTimeDifference(QString weekselect)
     } else {
         minute = m_pTimeShowWidget->m_pMinuteRollWidget->readValue() - timeMinute;
     }
-
-//    if (timeHours > m_pTimeShowWidget->m_pHourRollWidget->readValue()) {
-//        hour = hour - (timeHours - m_pTimeShowWidget->m_pHourRollWidget->readValue());
-//    } else{
-//        hour = hour + (timeHours - m_pTimeShowWidget->m_pHourRollWidget->readValue());
-//    }
     return QStringLiteral("%1:%2").arg(hour).arg(minute);
 }
 
