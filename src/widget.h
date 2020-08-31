@@ -20,6 +20,10 @@
 #include <QGSettings>
 #include <QTranslator>
 #include <QApplication>
+#include <QSystemTrayIcon>
+#include <QMenu>
+#include <QAction>
+#include <QMessageBox>
 #include "confirmareawidget.h"
 #include "timeshowwidget.h"
 #include "comboxwidget.h"
@@ -58,9 +62,13 @@ private:
     void initLayout();
 
     void initMenuBarAction();
-    void initComBoxInfo();
     void initSignalSlots();
     void initDropDownBoxLabelStatus();
+
+    // 初始化托盘图标
+    void createActions();
+    void createTrayIcon();
+    void setIcon(QIcon icon);
 
     // getstting初始化、值获取、 设置getsetting值
     void initGsetting();
@@ -98,9 +106,19 @@ private:
     QString m_traslateMinute;
     QTranslator *m_ptranslator;
 
+    /* 托盘栏图标 */
+    QAction *minimizeAction;
+    QAction *maximizeAction;
+    QAction *restoreAction;
+    QAction *quitAction;
+
+    QSystemTrayIcon *trayIcon;
+    QMenu *trayIconMenu;
+
     int          m_Hours;                                               // 时
     int          m_Minute;                                              // 分钟
     bool         m_timeShotdown             = false;
+    bool         m_bShowFlag                = false;
 
     dropdownbox       *m_pDropDownBox       = nullptr;
     menuBarWidget     *m_pMenuBarWidget     = nullptr;
@@ -108,7 +126,9 @@ private:
     confirmAreaWidget *m_pConfirmAreaWidget = nullptr;
     timeShowWidget    *m_pTimeShowWidget    = nullptr;
     BlankShadowWidget *m_pBlankShadowWidget = nullptr;
+
 protected:
+    void closeEvent(QCloseEvent *event);
     void paintEvent(QPaintEvent *event);
     void mousePressEvent(QMouseEvent *event);
 
@@ -118,7 +138,7 @@ public slots:
     void confirmButtonSlots();
     void canceButtonSlots();
     void threadSlots();
-
+    void iconActivated(QSystemTrayIcon::ActivationReason reason);
 signals:
     void hideDropDownBox();
 };

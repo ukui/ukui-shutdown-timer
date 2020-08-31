@@ -92,6 +92,14 @@ Widget::Widget(QWidget *parent)
     // 初始化gsetting值
     initGsetting();
 
+    // 创建当前动作
+    createActions();
+
+    // 初始化当前的托盘栏图标
+    createTrayIcon();
+
+    setIcon(QIcon::fromTheme("kylin-alarm-clock"));
+
     // 获取保存在gsetting中的定时关机设置状态
     getTimedShutdownState();
 
@@ -133,7 +141,6 @@ void Widget::initMemberVariable()
     QPalette RemainLabelpalette;
     RemainLabelpalette.setColor(QPalette::WindowText,Qt::white);
     m_pTimeRemainLabel->setPalette(RemainLabelpalette);
-//    m_pTimeRemainLabel->setText("距离下一次自动关机还有12小时31分钟");
     m_pTimeRemainLabel->setAlignment(Qt::AlignHCenter);
     m_pTimeRemainLabel->setFixedHeight(18);
 
@@ -185,16 +192,9 @@ void Widget::initMenuBarAction()
        this->showMinimized();
     });
     connect(m_pMenuBarWidget->m_pCloseButton, &QPushButton::clicked, this, [=](){
-        qApp->quit();
+        this->close();
+        m_bShowFlag = true;
     });
-}
-
-void Widget::initComBoxInfo()
-{
-    // 读取gsetting值
-//    getComBoxShutdownFrequency();
-
-    return;
 }
 
 void Widget::initSignalSlots()
@@ -230,6 +230,42 @@ void Widget::initGsetting()
         qDebug() << "当前的gsetting的key值" << m_pTimeShutdown->keys();
     }
     return;
+}
+
+void Widget::createActions()
+{
+    minimizeAction = new QAction(tr("Mi&nimize"), this);
+    connect(minimizeAction, &QAction::triggered, this, &QWidget::hide);
+
+    maximizeAction = new QAction(tr("Ma&ximize"), this);
+    connect(maximizeAction, &QAction::triggered, this, &QWidget::showMaximized);
+
+    restoreAction = new QAction(tr("&Restore"), this);
+    connect(restoreAction, &QAction::triggered, this, &QWidget::showNormal);
+
+    quitAction = new QAction(tr("&Quit"), this);
+    connect(quitAction, &QAction::triggered, qApp, &QCoreApplication::quit);
+}
+
+void Widget::createTrayIcon()
+{
+    trayIconMenu = new QMenu(this);
+    trayIconMenu->addAction(minimizeAction);
+    trayIconMenu->addAction(maximizeAction);
+    trayIconMenu->addAction(restoreAction);
+    trayIconMenu->addSeparator();
+    trayIconMenu->addAction(quitAction);
+
+    trayIcon = new QSystemTrayIcon(this);
+    trayIcon->setContextMenu(trayIconMenu);
+    connect(trayIcon, &QSystemTrayIcon::activated, this, &Widget::iconActivated);
+}
+
+void Widget::setIcon(QIcon icon)
+{
+    trayIcon->setIcon(icon);
+    setWindowIcon(icon);
+    trayIcon->show();
 }
 
 /* 获取关机频率字符串 */
@@ -493,11 +529,9 @@ QString Widget::GetCalculateTimeDifference(QString weekselect)
         } else {
             hour = 24 * (7 - (currentTmp - nextCurrenttmp));
         }
-        qDebug() << "123123123121111111";
     } else if (nextCurrenttmp == currentTmp &&
                timeHours < m_pTimeShowWidget->m_pHourRollWidget->readValue()) {
         hour = m_pTimeShowWidget->m_pHourRollWidget->readValue() - timeHours;
-        qDebug() << "12312312312";
     }
 
     if (timeMinute > m_pTimeShowWidget->m_pMinuteRollWidget->readValue()) {
@@ -507,6 +541,19 @@ QString Widget::GetCalculateTimeDifference(QString weekselect)
         minute = m_pTimeShowWidget->m_pMinuteRollWidget->readValue() - timeMinute;
     }
     return QStringLiteral("%1:%2").arg(hour).arg(minute);
+}
+
+void Widget::closeEvent(QCloseEvent *event)
+{
+#ifdef Q_OS_OSX
+    if (!event->spontaneous() || !isVisible()) {
+        return;
+    }
+#endif
+    if (trayIcon->isVisible()) {
+        hide();
+        event->ignore();
+    }
 }
 
 void Widget::paintEvent(QPaintEvent *event)
@@ -592,6 +639,7 @@ void Widget::confirmButtonSlots()
     setShutDownTimeValue(m_pShowDownTime);
     setFrequencyValue(m_WeekSelect);
     m_pConfirmAreaWidget->m_pConfirmButton->setEnabled(false);
+    m_pTimeRemainLabel->setVisible(true);
 
     // 断开点击Combox展示下拉框的 信号 槽
     disconnect(m_pComBoxWidget, &comBoxWidget::comBoxWidgetClicked, this, &Widget::dropDownBoxShowHideSlots);
@@ -611,7 +659,7 @@ void Widget::canceButtonSlots()
     qDebug() << "当前的gsetting值" << m_WeekSelect;
     setTimeShutdownValue(false);
     m_pConfirmAreaWidget->m_pConfirmButton->setEnabled(true);
-
+    m_pTimeRemainLabel->setVisible(false);
     // 重新连接点击Combox展示下拉框的 信号 槽
     connect(m_pComBoxWidget, &comBoxWidget::comBoxWidgetClicked, this, &Widget::dropDownBoxShowHideSlots);
     return;
@@ -629,5 +677,23 @@ void Widget::threadSlots()
         p.startDetached("ukui-session-tools");
         p.waitForStarted();
         setWeekSelectShutdownFrequency();
+    }
+}
+
+void Widget::iconActivated(QSystemTrayIcon::ActivationReason reason)
+{
+    switch (reason) {
+    case QSystemTrayIcon::Trigger:
+        if (m_bShowFlag) {
+            this->show();
+            m_bShowFlag = false;
+        } else {
+            this->hide();
+            m_bShowFlag = true;
+        }
+    case QSystemTrayIcon::Context:
+        break;
+    default:
+        ;
     }
 }
