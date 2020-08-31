@@ -75,7 +75,7 @@
     </message>
     <message>
         <location filename="../src/timeshowwidget.cpp" line="43"/>
-        <location filename="../src/widget.cpp" line="142"/>
+        <location filename="../src/widget.cpp" line="149"/>
         <source>minute</source>
         <translation>分</translation>
     </message>
@@ -85,12 +85,12 @@
         <translation>定时关机</translation>
     </message>
     <message>
-        <location filename="../src/widget.cpp" line="140"/>
+        <location filename="../src/widget.cpp" line="147"/>
         <source>next shutdown</source>
         <translation>下一次关机时间</translation>
     </message>
     <message>
-        <location filename="../src/widget.cpp" line="141"/>
+        <location filename="../src/widget.cpp" line="148"/>
         <source>hour</source>
         <translation>小时</translation>
     </message>
@@ -105,6 +105,24 @@
         <location filename="../src/verticalscroll60.cpp" line="243"/>
         <source>VerticalScroll_60</source>
         <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>Widget</name>
+    <message>
+        <location filename="../src/widget.cpp" line="237"/>
+        <source>Mi&amp;nimize</source>
+        <translation>最小化</translation>
+    </message>
+    <message>
+        <location filename="../src/widget.cpp" line="240"/>
+        <source>&amp;Restore</source>
+        <translation>打开</translation>
+    </message>
+    <message>
+        <location filename="../src/widget.cpp" line="243"/>
+        <source>&amp;Quit</source>
+        <translation>退出</translation>
     </message>
 </context>
 </TS>

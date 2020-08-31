@@ -45,7 +45,7 @@ schemes.path = /usr/share/glib-2.0/schemas/
 desktopfile.files = data/ukui-time-shotdown.desktop
 desktopfile.path = /usr/share/applications/
 
-target.path = $${PREFIX}/lib/ukui-notification-daemon
+target.path = /usr/bin/
 
 INSTALLS += target schemes desktopfile translation
 # Default rules for deployment.
