@@ -79,7 +79,7 @@ void dropdownbox::initWeekDateList()
 /* 初始化下拉列表中的内容 */
 void dropdownbox::initAllDateWidget()
 {
-    for(int i = 0; i < m_pWeekDateList.count(); i++) {
+    for (int i = 0; i < m_pWeekDateList.count(); i++) {
         m_pDateSelectionWidgetArray[i] = new dateSelectionWidget(m_pWeekDateList[i]);
         m_pItem[i]                     = new QListWidgetItem();
 //        m_pItem[i]->setFlags(Qt::NoItemFlags);
@@ -87,7 +87,7 @@ void dropdownbox::initAllDateWidget()
         m_pListWidget->addItem(m_pItem[i]);
         m_pListWidget->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
         m_pListWidget->setItemWidget(m_pItem[i], m_pDateSelectionWidgetArray[i]);
-        QScroller::grabGesture(m_pListWidget,QScroller::LeftMouseButtonGesture); //设置鼠标左键拖动
+        QScroller::grabGesture(m_pListWidget, QScroller::LeftMouseButtonGesture); //设置鼠标左键拖动
         m_pListWidget -> setVerticalScrollMode(QAbstractItemView::ScrollPerPixel); // 设置像素级滑动
     }
     return;
