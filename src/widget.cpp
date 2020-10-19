@@ -449,6 +449,7 @@ int Widget::getCurrentShutDownNum()
     int tmp = m_pDropDownBox->m_pListWidget->count();
     int currentTmp;
     for (int i = 0; i < tmp; i++) {
+        qDebug() << getDropDownBoxWidget(i)->m_pweekLabel->text() << week;
         if (getDropDownBoxWidget(i)->m_pweekLabel->text() == week) {
             currentTmp = i;
             break;
@@ -466,6 +467,7 @@ int Widget::getNextShutDownNum(int currentTmp, QString weekSelect)
     weekList.clear();
     QTime time = QTime::currentTime();
     int timeHours = time.hour();
+    int minite = time.minute();
     for (int j = 0; j < weekSelectList.count(); j++) {
         for (int i = 0; i < tmp; i++) {
             if (weekSelectList.at(j) == getDropDownBoxWidget(i)->m_pweekLabel->text()) {
@@ -478,7 +480,7 @@ int Widget::getNextShutDownNum(int currentTmp, QString weekSelect)
     if (cotanl) {
         for (int k = 0; k < weekSelectList.count(); k++) {
             if (currentTmp == weekList.at(k) &&
-                    timeHours >= m_pTimeShowWidget->m_pHourRollWidget->readValue()) {
+                    timeHours > m_pTimeShowWidget->m_pHourRollWidget->readValue()) {
                 if ((k + 1) < weekSelectList.count()) {
                     return weekList.at(k + 1);
                 } else if ((k - 1) >= 0) {
@@ -489,6 +491,19 @@ int Widget::getNextShutDownNum(int currentTmp, QString weekSelect)
             } else if (currentTmp == weekList.at(k) &&
                        timeHours < m_pTimeShowWidget->m_pHourRollWidget->readValue()) {
                     return weekList.at(k);
+            } else if (currentTmp == weekList.at(k) &&
+                       timeHours == m_pTimeShowWidget->m_pHourRollWidget->readValue()) {
+                if (minite > m_pTimeShowWidget->m_pMinuteRollWidget->readValue()) {
+                    if ((k + 1) < weekSelectList.count()) {
+                        return weekList.at(k + 1);
+                    } else if ((k - 1) >= 0) {
+                        return weekList.at(k - 1);
+                    } else {
+                        return weekList.at(k);
+                    }
+                } else {
+                    return weekList.at(k);
+                }
             }
         }
     } else {
@@ -513,7 +528,7 @@ QString Widget::GetCalculateTimeDifference(QString weekselect)
     int hour, minute = 0;
     qDebug() << "当前关机序号" << currentTmp << "下一次关机序号" << nextCurrenttmp;
 
-    if (nextCurrenttmp > currentTmp) {
+    if (nextCurrenttmp > currentTmp ) {
         hour = 24 * (nextCurrenttmp - currentTmp);
     } else if (nextCurrenttmp < currentTmp) {
         hour = 24 * (7 - (currentTmp - nextCurrenttmp));
