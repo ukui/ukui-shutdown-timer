@@ -50,8 +50,8 @@ void menuBarWidget::initMemberVariable()
 
 void menuBarWidget::initLayout()
 {
-    m_pHBoxLayout->addWidget(m_pIconLabel);
-    m_pHBoxLayout->addItem(new QSpacerItem(8, 1));
+//    m_pHBoxLayout->addWidget(m_pIconLabel);
+    m_pHBoxLayout->addItem(new QSpacerItem(12, 1));
     m_pHBoxLayout->addWidget(m_pTileLabel);
     m_pHBoxLayout->addItem(new QSpacerItem(204, 10, QSizePolicy::Expanding));
     m_pHBoxLayout->addWidget(m_pHideButton);
@@ -189,7 +189,7 @@ void Widget::initLayout()
 void Widget::initMenuBarAction()
 {
     connect(m_pMenuBarWidget->m_pHideButton, &QPushButton::clicked, this, [=](){
-       this->showMinimized();
+        this->showMinimized();
     });
     connect(m_pMenuBarWidget->m_pCloseButton, &QPushButton::clicked, this, [=](){
         this->close();
