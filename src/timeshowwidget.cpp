@@ -54,8 +54,8 @@ void timeShowWidget::initMemberVariable()
 
 void timeShowWidget::initLayout()
 {
-    m_pHourLabel->move(120, 0);
-    m_pMinuteLabel->move(220, 0);
+    m_pHourLabel->move(128, 0);
+    m_pMinuteLabel->move(230, 0);
     m_pHourRollWidget->move(117, 10);
     m_pSeparatedLabel->move(182, 60);
     m_pMinuteRollWidget->move(222, 10);

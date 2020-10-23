@@ -11,7 +11,7 @@ void menuBarWidget::initMemberVariable()
 {
     m_pIconLabel   =  new QLabel();                                             // 显示标题图标
     m_pIconLabel->setFixedSize(24, 24);
-    QIcon icon = QIcon::fromTheme("kylin-alarm-clock");
+    QIcon icon = QIcon::fromTheme("ukui-time_shutdown", QIcon("://image/time_shutdown.svg"));
     QPixmap pixmap = icon.pixmap(QSize(24, 24));
     m_pIconLabel->setPixmap(pixmap);
 
@@ -98,7 +98,7 @@ Widget::Widget(QWidget *parent)
     // 初始化当前的托盘栏图标
     createTrayIcon();
 
-    setIcon(QIcon::fromTheme("kylin-alarm-clock"));
+    setIcon(QIcon::fromTheme("ukui-time_shutdown", QIcon("://image/time_shutdown.svg")));
 
     // 获取保存在gsetting中的定时关机设置状态
     getTimedShutdownState();
@@ -116,7 +116,7 @@ Widget::Widget(QWidget *parent)
     initDropDownBoxLabelStatus();
 
     this->setWindowFlag(Qt::FramelessWindowHint);
-    this->setWindowIcon(QIcon::fromTheme("kylin-alarm-clock"));
+    this->setWindowIcon(QIcon::fromTheme("ukui-time_shutdown", QIcon("://image/time_shutdown.svg")));
 }
 
 Widget::~Widget()

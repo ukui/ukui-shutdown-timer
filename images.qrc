@@ -6,6 +6,7 @@
         <file>image/mini_light.png</file>
         <file>image/mini2.png</file>
         <file>image/mini3.png</file>
+	<file>image/time_shutdown.svg</file>
     </qresource>
 </RCC>
 
