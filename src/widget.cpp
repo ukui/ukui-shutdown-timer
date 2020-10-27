@@ -116,6 +116,7 @@ Widget::Widget(QWidget *parent)
     initDropDownBoxLabelStatus();
 
     this->setWindowFlag(Qt::FramelessWindowHint);
+    this->setAttribute(Qt::WA_TranslucentBackground);
     this->setWindowIcon(QIcon::fromTheme("ukui-time_shutdown", QIcon("://image/time_shutdown.svg")));
 }
 
@@ -574,12 +575,14 @@ void Widget::paintEvent(QPaintEvent *event)
     QPainter p(this);
     QPainterPath path;
     opt.rect.adjust(0,0,0,0);
+    path.addRoundedRect(opt.rect, 10, 10);
     p.setBrush(QBrush(QColor("#131314")));
     p.setOpacity(1);
     p.setPen(Qt::NoPen);
-    p.drawRoundedRect(opt.rect, 6, 6);
+    p.drawRoundedRect(opt.rect, 10, 10);
     p.setRenderHint(QPainter::Antialiasing); //反锯齿
-    setProperty("blurRegion", QRegion(path.toFillPolygon().toPolygon()));
+    QRegion Region(path.toFillPolygon().toPolygon());
+    setProperty("blurRegion", Region);
     style()->drawPrimitive(QStyle::PE_Widget, &opt, &p, this);
     QWidget::paintEvent(event);
 }

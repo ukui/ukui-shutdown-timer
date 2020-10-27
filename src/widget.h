@@ -139,6 +139,7 @@ public slots:
     void canceButtonSlots();
     void threadSlots();
     void iconActivated(QSystemTrayIcon::ActivationReason reason);
+
 signals:
     void hideDropDownBox();
 };
