@@ -64,18 +64,8 @@ void menuBarWidget::initLayout()
 Widget::Widget(QWidget *parent)
     : QWidget(parent)
 {
-    m_ptranslator = new QTranslator;
-    QTranslator *translator_qt = new QTranslator;
-    //获取系统语言环境 选择翻译文件
-    if (m_ptranslator->load(QLocale(), QLatin1String("time-shutdown"), QLatin1String("_"), QLatin1String("/usr/share/ukui-time-shutdown/")))
-        QApplication::installTranslator(m_ptranslator);
-    else
-        qDebug() << "cannot load translator ukui-clipboard_" << QLocale::system().name() << ".qm!";
-
-    if (translator_qt->load("/usr/share/qt5/translations/qt_"+QLocale::system().name()))
-        QApplication::installTranslator(translator_qt);
-    else
-        qDebug() << "cannot load translator ukui-feedback_" << QLocale::system().name() << ".qm!";
+    // 国际化
+    initTranslation();
 
     // 初始化成员变量
     initMemberVariable();
@@ -123,6 +113,22 @@ Widget::Widget(QWidget *parent)
 Widget::~Widget()
 {
 
+}
+
+void Widget::initTranslation()
+{
+    m_ptranslator = new QTranslator;
+    QTranslator *translator_qt = new QTranslator;
+    //获取系统语言环境 选择翻译文件
+    if (m_ptranslator->load(QLocale(), QLatin1String("time-shutdown"), QLatin1String("_"), QLatin1String("/usr/share/ukui-time-shutdown/")))
+        QApplication::installTranslator(m_ptranslator);
+    else
+        qDebug() << "cannot load translator ukui-clipboard_" << QLocale::system().name() << ".qm!";
+
+    if (translator_qt->load("/usr/share/qt5/translations/qt_"+QLocale::system().name()))
+        QApplication::installTranslator(translator_qt);
+    else
+        qDebug() << "cannot load translator ukui-feedback_" << QLocale::system().name() << ".qm!";
 }
 
 void Widget::initMemberVariable()

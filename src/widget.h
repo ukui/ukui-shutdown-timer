@@ -58,6 +58,7 @@ public:
 
 
 private:
+    void initTranslation();
     void initMemberVariable();
     void initLayout();
 
