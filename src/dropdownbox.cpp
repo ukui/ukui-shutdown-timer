@@ -35,7 +35,6 @@ void dateSelectionWidget::mouseReleaseEvent(QMouseEvent *event)
     QWidget::mouseReleaseEvent(event);
 }
 
-
 dropdownbox::dropdownbox(QWidget *parent) : QWidget(parent)
 {
     initMemberVariable();
