@@ -1,4 +1,5 @@
 #include "timeshowwidget.h"
+#include <QPainterPath>
 
 BlankShadowWidget::BlankShadowWidget(QWidget *parent) : QWidget(parent)
 {

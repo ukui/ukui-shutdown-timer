@@ -1,4 +1,5 @@
 #include "dropdownbox.h"
+#include <QPainterPath>
 
 dateSelectionWidget::dateSelectionWidget(QString week, QWidget *parent) : QWidget(parent)
 {
