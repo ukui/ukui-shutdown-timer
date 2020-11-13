@@ -1,4 +1,5 @@
 #include "widget.h"
+#include <QPainterPath>
 
 /* 上方Menu界面 */
 menuBarWidget::menuBarWidget(QWidget *parent) : QWidget(parent)

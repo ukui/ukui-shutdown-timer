@@ -1,4 +1,5 @@
 #include "comboxwidget.h"
+#include <QPainterPath>
 
 comBoxWidget::comBoxWidget(QWidget *parent) : QWidget(parent)
 {
