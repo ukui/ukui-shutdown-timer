@@ -140,7 +140,7 @@ public slots:
     void canceButtonSlots();
     void threadSlots();
     void iconActivated(QSystemTrayIcon::ActivationReason reason);
-
+    void bootOptionsFilter(const QString&);
 signals:
     void hideDropDownBox();
 };

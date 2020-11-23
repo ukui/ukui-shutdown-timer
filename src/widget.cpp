@@ -719,3 +719,11 @@ void Widget::iconActivated(QSystemTrayIcon::ActivationReason reason)
         ;
     }
 }
+
+void Widget::bootOptionsFilter(const QString&)
+{
+    this->show();
+    this->raise();
+    this->activateWindow();
+    m_bShowFlag = false;
+}

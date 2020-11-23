@@ -7,7 +7,10 @@ SOURCES += \
     $$PWD/widget.cpp  \
     $$PWD/verticalscroll60.cpp \
     $$PWD/CanceButtonStyle.cpp \
-    $$PWD/ConfirmButtonStyle.cpp
+    $$PWD/ConfirmButtonStyle.cpp \
+    $$PWD/qtsingleapplication.cpp \
+    $$PWD/qtlocalpeer.cpp \
+    $$PWD/qtlockedfile.cpp \
 
 
 HEADERS += \
@@ -19,4 +22,7 @@ HEADERS += \
     $$PWD/widget.h \
     $$PWD/verticalscroll60.h \
     $$PWD/CanceButtonStyle.h \
-    $$PWD/ConfirmButtonStyle.h
+    $$PWD/ConfirmButtonStyle.h \
+    $$PWD/qtsingleapplication.h \
+    $$PWD/qtlocalpeer.h \
+    $$PWD/qtlockedfile.h \

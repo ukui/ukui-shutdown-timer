@@ -1,4 +1,5 @@
 #include "widget.h"
+#include "qtsingleapplication.h"
 #include <QApplication>
 #include <QStandardPaths>
 #include <stdio.h>
@@ -32,22 +33,29 @@ int main(int argc, char *argv[])
         #endif
     }
 
-    /* 如果系统中有实例在运行则退出 */
-    QStringList strlistHomePath = QStandardPaths::standardLocations(QStandardPaths::HomeLocation);
-    QString strLockPath = strlistHomePath.at(0) + "/.config/time-shutdown";
+//    /* 如果系统中有实例在运行则退出 */
+//    QStringList strlistHomePath = QStandardPaths::standardLocations(QStandardPaths::HomeLocation);
+//    QString strLockPath = strlistHomePath.at(0) + "/.config/time-shutdown";
 
-    int fd = open(strLockPath.toUtf8().data(), O_WRONLY | O_CREAT | O_TRUNC, S_IRUSR | S_IWUSR);
-    if (fd < 0)
-        exit(1);
+//    int fd = open(strLockPath.toUtf8().data(), O_WRONLY | O_CREAT | O_TRUNC, S_IRUSR | S_IWUSR);
+//    if (fd < 0)
+//        exit(1);
 
-    if (lockf(fd, F_TLOCK, 0)) {
-        syslog(LOG_ERR, "Can't lock single file, ukui-sidebar is already running!");
-        qDebug()<<"Can't lock single file, ukui-sidebar is already running!";
-        exit(0);
+//    if (lockf(fd, F_TLOCK, 0)) {
+//        syslog(LOG_ERR, "Can't lock single file, ukui-sidebar is already running!");
+//        qDebug()<<"Can't lock single file, ukui-sidebar is already running!";
+//        exit(0);
+//    }
+    QString id = QString("time-shutdown-" + QLatin1String(getenv("DISPLAY")));
+    QtSingleApplication a(id, argc, argv);
+    if (a.isRunning()) {
+        a.sendMessage(nullptr);
+        qDebug() << QObject::tr("time-shutdown is already running!");
+        return EXIT_SUCCESS;
+    } else {
+        Widget w;
+        w.show();
+        QObject::connect(&a, SIGNAL(messageReceived(const QString&)), &w, SLOT(bootOptionsFilter(const QString&)));
+        return a.exec();
     }
-
-    QApplication a(argc, argv);
-    Widget w;
-    w.show();
-    return a.exec();
 }
