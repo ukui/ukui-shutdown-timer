@@ -42,8 +42,8 @@ translation.path = /usr/share/ukui-time-shutdown/
 schemes.files += data/org.ukui.time.shutdown.settings.gschema.xml
 schemes.path = /usr/share/glib-2.0/schemas/
 
-desktopfile.files = data/ukui-time-shotdown.desktop
-desktopfile.path = /usr/share/applications/
+#desktopfile.files = data/ukui-time-shotdown.desktop
+#desktopfile.path = /usr/share/applications/
 
 target.path = /usr/bin/
 
