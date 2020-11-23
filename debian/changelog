@@ -1,7 +1,11 @@
-time-shutdown (1.1.0-1-0003) v101; urgency=medium
+time-shutdown (1.1.0-1-0004) v101; urgency=medium
 
   * New upstream release.
     - init time-shutdown deb 
+    - Modify the singleton implementation
+    - delete desktop file and Modify changlog
+    - Modify Encapsulation internationalization
+    - Add anti-aliasing
 
  -- liushanwen <liushanwen@kylinos.cn>  Mon, 23 Nov 2020 17:17:27 +0800
 
