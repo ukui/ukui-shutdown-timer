@@ -4,7 +4,7 @@
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../src/comboxwidget.cpp" line="19"/>
+        <location filename="../src/comboxwidget.cpp" line="20"/>
         <source>Shutdown</source>
         <translation>关机频率</translation>
     </message>
@@ -69,34 +69,40 @@
         <translation>周日</translation>
     </message>
     <message>
-        <location filename="../src/timeshowwidget.cpp" line="39"/>
+        <location filename="../src/timeshowwidget.cpp" line="40"/>
         <source>hours</source>
         <translation>时</translation>
     </message>
     <message>
-        <location filename="../src/timeshowwidget.cpp" line="43"/>
-        <location filename="../src/widget.cpp" line="149"/>
+        <location filename="../src/timeshowwidget.cpp" line="44"/>
+        <location filename="../src/widget.cpp" line="158"/>
         <source>minute</source>
         <translation>分</translation>
     </message>
     <message>
-        <location filename="../src/widget.cpp" line="24"/>
+        <location filename="../src/widget.cpp" line="18"/>
+        <location filename="../src/widget.cpp" line="26"/>
         <source>time-shutdown</source>
         <translation>定时关机</translation>
     </message>
     <message>
-        <location filename="../src/widget.cpp" line="147"/>
+        <location filename="../src/widget.cpp" line="156"/>
         <source>next shutdown</source>
         <translation>下一次关机时间</translation>
     </message>
     <message>
-        <location filename="../src/widget.cpp" line="148"/>
+        <location filename="../src/widget.cpp" line="157"/>
         <source>hour</source>
         <translation>小时</translation>
     </message>
     <message>
         <source>minutes</source>
         <translation type="vanished">分钟</translation>
+    </message>
+    <message>
+        <location filename="../src/main.cpp" line="53"/>
+        <source>time-shutdown is already running!</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -110,17 +116,17 @@
 <context>
     <name>Widget</name>
     <message>
-        <location filename="../src/widget.cpp" line="237"/>
+        <location filename="../src/widget.cpp" line="246"/>
         <source>Mi&amp;nimize</source>
         <translation>最小化</translation>
     </message>
     <message>
-        <location filename="../src/widget.cpp" line="240"/>
+        <location filename="../src/widget.cpp" line="249"/>
         <source>&amp;Restore</source>
         <translation>打开</translation>
     </message>
     <message>
-        <location filename="../src/widget.cpp" line="243"/>
+        <location filename="../src/widget.cpp" line="252"/>
         <source>&amp;Quit</source>
         <translation>退出</translation>
     </message>

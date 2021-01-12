@@ -136,6 +136,7 @@ void Widget::initMemberVariable()
 {
     this->setContentsMargins(0, 0, 0, 0);
     this->setFixedSize(372, 376);
+    this->setWindowTitle(QObject::tr("time-shutdown"));
 
     m_pVMainLayout = new QVBoxLayout();
     m_pVMainLayout->setSpacing(0);
