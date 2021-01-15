@@ -109,6 +109,9 @@ Widget::Widget(QWidget *parent)
     this->setWindowFlag(Qt::FramelessWindowHint);
     this->setAttribute(Qt::WA_TranslucentBackground);
     this->setWindowIcon(QIcon::fromTheme("ukui-time_shutdown", QIcon("://image/time_shutdown.svg")));
+
+    QDesktopWidget *pDesk = QApplication::desktop();
+    move((pDesk->width() - this->width()) / 2, (pDesk->height() - this->height()) / 2);
 }
 
 Widget::~Widget()
@@ -641,6 +644,10 @@ void Widget::updatedropDownBoxSelectSlots(const QModelIndex &index)
 void Widget::confirmButtonSlots()
 {
     setShutdownFrequency(m_WeekSelect);
+    QString str = tr("never");
+    if (!m_WeekSelect.compare(str)) {
+        QMessageBox::warning(NULL, tr("warning"), tr("no set shutdown"), QMessageBox::Ok );
+    }
     m_timeShotdown = getTimedShutdownState();
     if (!m_timeShotdown) {
         return;
@@ -679,6 +686,10 @@ void Widget::canceButtonSlots()
     m_pTransparentWidget->setVisible(false);                // 置时间调试界面为可滚动
     setShutDownTimeValue(m_pShowDownTime);
     setFrequencyValue(m_WeekSelect);
+    QString str = tr("never");
+    if (!m_WeekSelect.compare(str)) {
+        exit(0);
+    }
     qDebug() << "当前的gsetting值" << m_WeekSelect;
     setTimeShutdownValue(false);
     m_pConfirmAreaWidget->m_pConfirmButton->setEnabled(true);

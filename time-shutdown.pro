@@ -47,6 +47,6 @@ schemes.path = /usr/share/glib-2.0/schemas/
 
 target.path = /usr/bin/
 
-INSTALLS += target schemes desktopfile translation
+INSTALLS += target schemes  translation
 # Default rules for deployment.
 

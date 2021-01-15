@@ -24,6 +24,7 @@
 #include <QMenu>
 #include <QAction>
 #include <QMessageBox>
+#include <QDesktopWidget>
 #include "confirmareawidget.h"
 #include "timeshowwidget.h"
 #include "comboxwidget.h"

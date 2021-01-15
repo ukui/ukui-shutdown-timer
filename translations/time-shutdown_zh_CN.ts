@@ -75,23 +75,23 @@
     </message>
     <message>
         <location filename="../src/timeshowwidget.cpp" line="44"/>
-        <location filename="../src/widget.cpp" line="158"/>
+        <location filename="../src/widget.cpp" line="161"/>
         <source>minute</source>
         <translation>分</translation>
     </message>
     <message>
-        <location filename="../src/widget.cpp" line="18"/>
-        <location filename="../src/widget.cpp" line="26"/>
+        <location filename="../src/widget.cpp" line="25"/>
+        <location filename="../src/widget.cpp" line="142"/>
         <source>time-shutdown</source>
         <translation>定时关机</translation>
     </message>
     <message>
-        <location filename="../src/widget.cpp" line="156"/>
+        <location filename="../src/widget.cpp" line="159"/>
         <source>next shutdown</source>
-        <translation>下一次关机时间</translation>
+        <translation>距离下一次关机时间</translation>
     </message>
     <message>
-        <location filename="../src/widget.cpp" line="157"/>
+        <location filename="../src/widget.cpp" line="160"/>
         <source>hour</source>
         <translation>小时</translation>
     </message>
@@ -102,7 +102,7 @@
     <message>
         <location filename="../src/main.cpp" line="53"/>
         <source>time-shutdown is already running!</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">定时关机已经运行</translation>
     </message>
 </context>
 <context>
@@ -110,25 +110,41 @@
     <message>
         <location filename="../src/verticalscroll60.cpp" line="243"/>
         <source>VerticalScroll_60</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
 </context>
 <context>
     <name>Widget</name>
     <message>
-        <location filename="../src/widget.cpp" line="246"/>
+        <location filename="../src/widget.cpp" line="249"/>
         <source>Mi&amp;nimize</source>
         <translation>最小化</translation>
     </message>
     <message>
-        <location filename="../src/widget.cpp" line="249"/>
+        <location filename="../src/widget.cpp" line="252"/>
         <source>&amp;Restore</source>
         <translation>打开</translation>
     </message>
     <message>
-        <location filename="../src/widget.cpp" line="252"/>
+        <location filename="../src/widget.cpp" line="255"/>
         <source>&amp;Quit</source>
         <translation>退出</translation>
+    </message>
+    <message>
+        <location filename="../src/widget.cpp" line="647"/>
+        <location filename="../src/widget.cpp" line="690"/>
+        <source>never</source>
+        <translation>从不</translation>
+    </message>
+    <message>
+        <location filename="../src/widget.cpp" line="650"/>
+        <source>warning</source>
+        <translation>警告</translation>
+    </message>
+    <message>
+        <location filename="../src/widget.cpp" line="650"/>
+        <source>no set shutdown</source>
+        <translation>未设置关机频率</translation>
     </message>
 </context>
 </TS>

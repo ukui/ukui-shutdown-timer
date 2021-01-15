@@ -1,3 +1,18 @@
+time-shutdown (1.1.0-1-0007) v101; urgency=medium
+
+  * 修复bug:
+    - 修复关机频率为从不时，点击确定/取消没反应，增加点击确定后弹出提示框
+    - 修改下次关机时间提示为距离下次关机时间
+
+ -- wanghailiang <wanghailiang@kylinos.cn>  Fri, 15 Jan 2021 14:32:51 +0800
+
+time-shutdown (1.1.0-1-0006) v101; urgency=medium
+
+  * New upstream release.
+    - 更新任务栏上预览窗口翻译
+
+ -- liushanwen <liushanwen@kylinos.cn>  Wed, 13 Jan 2021 10:27:21 +0800
+
 time-shutdown (1.1.0-1-0004) v101; urgency=medium
 
   * New upstream release.
