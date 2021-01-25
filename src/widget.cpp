@@ -266,6 +266,7 @@ void Widget::createTrayIcon()
 
     trayIcon = new QSystemTrayIcon(this);
     trayIcon->setContextMenu(trayIconMenu);
+    trayIcon->setToolTip(QObject::tr("time-shutdown"));
     connect(trayIcon, &QSystemTrayIcon::activated, this, &Widget::iconActivated);
 }
 
