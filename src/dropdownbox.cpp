@@ -47,6 +47,7 @@ void dropdownbox::initMemberVariable()
 {
     m_pListWidget = new QListWidget();
     m_pListWidget->setStyleSheet("QListWidget {background:rgba(19, 19, 20, 0);}");
+    m_pListWidget->verticalScrollBar()->setProperty("drawScrollBarGroove", false);
     m_pListWidget->setParent(this);
     m_pListWidget->setFixedSize(312, 261);
     m_pListWidget->setContentsMargins(0, 0, 0, 0);
@@ -140,7 +141,6 @@ QStringList dropdownbox::traverseListWidget()
         if (w->m_pselectedLabelIcon->isVisible()) {
             qDebug() << "当前存在的label" << w->m_pweekLabel->text();
             if (currentIndex <= 2) {
-                qDebug() << "1231231231";
                 dateSelectionWidget *w = dynamic_cast<dateSelectionWidget *>(m_pListWidget->itemWidget(m_pListWidget->item(currentIndex)));
                 WeekStringList.append(w->m_pweekLabel->text());
                 cleanSpecialbeforeSelect(currentIndex);

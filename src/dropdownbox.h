@@ -13,6 +13,7 @@
 #include <QTimer>
 #include <QDebug>
 #include <QMouseEvent>
+#include <QScrollBar>
 
 /* ListWidget中条目， 周一 ----------- √ */
 class dateSelectionWidget : public QWidget
