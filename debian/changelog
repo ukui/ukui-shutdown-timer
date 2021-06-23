@@ -1,3 +1,11 @@
+time-shutdown (1.1.0-1-0008) focal; urgency=medium
+
+  * 修复bug:
+    - 修复关机频率为从不时，点击确定/取消没反应，增加点击确定后弹出提示框
+    - 修改下次关机时间提示为距离下次关机时间
+
+ -- liushanwen <liushanwen@kylinos.cn>  Fri, 11 Jun 2021 15:14:06 +0800
+
 time-shutdown (1.1.0-1-0007) v101; urgency=medium
 
   * 修复bug:
