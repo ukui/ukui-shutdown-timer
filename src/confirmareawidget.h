@@ -5,7 +5,7 @@
 #include <QWidget>
 #include <QPushButton>
 #include <QHBoxLayout>
-
+#include <QVariant>
 class confirmAreaWidget : public QWidget
 {
     Q_OBJECT

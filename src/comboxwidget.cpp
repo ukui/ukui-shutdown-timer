@@ -11,19 +11,15 @@ comBoxWidget::comBoxWidget(QWidget *parent) : QWidget(parent)
 void comBoxWidget::initMemberVariable()
 {
     m_pLabel_1 = new QLabel();
-    QPalette palette;
-    palette.setColor(QPalette::WindowText,Qt::white);
     QFont font  = m_pLabel_1->font();
     font.setPixelSize(14);
     m_pLabel_1->setFont(font);
-    m_pLabel_1->setPalette(palette);
     m_pLabel_1->setText(QObject::tr("Shutdown"));
     m_pLabel_1->setFixedHeight(20);
 
     m_pLabel_2 = new QLabel();
     m_pLabel_2->setAlignment(Qt::AlignRight);
     m_pLabel_2->setFont(font);
-    m_pLabel_2->setPalette(palette);
     m_pLabel_2->setFixedHeight(20);
     m_pLabel_2->setFixedWidth(178);
 
@@ -67,7 +63,7 @@ void comBoxWidget::paintEvent(QPaintEvent *event)
     QPainter p(this);
     QPainterPath path;
     opt.rect.adjust(0,0,0,0);
-    p.setBrush(QBrush(QColor("#303033")));
+    p.setBrush(opt.palette.color(QPalette::Button));
     p.setOpacity(1);
     p.setPen(Qt::NoPen);
     p.drawRoundedRect(opt.rect, 6, 6);

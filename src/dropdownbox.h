@@ -41,7 +41,7 @@ public:
     explicit dropdownbox(QWidget *parent = nullptr);
 
     int                     m_currentRow;
-
+    QHBoxLayout            *m_pHboxLayout;
     QStringList             m_pWeekDateList;
     QListWidget            *m_pListWidget;
     QListWidgetItem        *m_pItem[10];

@@ -32,23 +32,6 @@
 
 #define UKUITIMESHUTDOWN "org.ukui.time-shutdwon.settings"
 
-/* 窗管部分界面 */
-class menuBarWidget : public QWidget
-{
-    Q_OBJECT
-public:
-    explicit menuBarWidget(QWidget *parent = nullptr);
-    QLabel      *m_pIconLabel   = nullptr;
-    QLabel      *m_pTileLabel   = nullptr;
-    QPushButton *m_pHideButton  = nullptr;
-    QPushButton *m_pCloseButton = nullptr;
-    QHBoxLayout *m_pHBoxLayout  = nullptr;
-
-private:
-    void initMemberVariable();
-    void initLayout();
-};
-
 /* app主类 */
 class Widget : public QWidget
 {
@@ -63,7 +46,6 @@ private:
     void initMemberVariable();
     void initLayout();
 
-    void initMenuBarAction();
     void initSignalSlots();
     void initDropDownBoxLabelStatus();
 
@@ -123,7 +105,6 @@ private:
     bool         m_bShowFlag                = false;
 
     dropdownbox       *m_pDropDownBox       = nullptr;
-    menuBarWidget     *m_pMenuBarWidget     = nullptr;
     comBoxWidget      *m_pComBoxWidget      = nullptr;
     confirmAreaWidget *m_pConfirmAreaWidget = nullptr;
     timeShowWidget    *m_pTimeShowWidget    = nullptr;
@@ -132,7 +113,6 @@ private:
 protected:
     void closeEvent(QCloseEvent *event);
     void paintEvent(QPaintEvent *event);
-    void mousePressEvent(QMouseEvent *event);
 
 public slots:
     void dropDownBoxShowHideSlots();

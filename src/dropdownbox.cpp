@@ -1,5 +1,8 @@
 #include "dropdownbox.h"
 #include <QPainterPath>
+#include <QApplication>
+
+extern void qt_blurImage(QImage &blurImage, qreal radius, bool quality, int transposed);
 
 dateSelectionWidget::dateSelectionWidget(QString week, QWidget *parent) : QWidget(parent)
 {
@@ -45,15 +48,17 @@ dropdownbox::dropdownbox(QWidget *parent) : QWidget(parent)
 
 void dropdownbox::initMemberVariable()
 {
+    this->setFixedSize(324, 273);
+    this->setContentsMargins(8, 8, 6, 8);
+    m_pHboxLayout = new QHBoxLayout();
     m_pListWidget = new QListWidget();
-    m_pListWidget->setStyleSheet("QListWidget {background:rgba(19, 19, 20, 0);}");
     m_pListWidget->verticalScrollBar()->setProperty("drawScrollBarGroove", false);
-    m_pListWidget->setParent(this);
-    m_pListWidget->setFixedSize(312, 261);
+    m_pListWidget->setFixedSize(312, 256);
     m_pListWidget->setContentsMargins(0, 0, 0, 0);
     m_pListWidget->setFrameShape(QListWidget::NoFrame);
-    this->setFixedSize(312, 261);
-    this->setAttribute(Qt::WA_TranslucentBackground);
+    m_pHboxLayout->setContentsMargins(0, 0, 0, 0);
+    m_pHboxLayout->addWidget(m_pListWidget);
+    this->setLayout(m_pHboxLayout);
 }
 
 void dropdownbox::initLayout()
@@ -164,17 +169,34 @@ QStringList dropdownbox::traverseListWidget()
 
 void dropdownbox::paintEvent(QPaintEvent *event)
 {
-    QStyleOption opt;
-    opt.init(this);
     QPainter p(this);
-    QPainterPath path;
-    opt.rect.adjust(0,0,0,0);
-    p.setBrush(QBrush(QColor("#303033")));
+    p.setRenderHint(QPainter::Antialiasing);
+    QPainterPath rectPath;
+    rectPath.addRoundedRect(this->rect().adjusted(6, 6, -6, -6), 6, 6);
+
+    QPixmap pixmap(this->rect().size());
+    pixmap.fill(Qt::transparent);
+    QPainter pixmapPainter(&pixmap);
+    pixmapPainter.setRenderHint(QPainter::Antialiasing);
+    pixmapPainter.setPen(Qt::transparent);
+    pixmapPainter.setBrush(QBrush(qApp->palette().color(QPalette::WindowText)));
+    pixmapPainter.drawPath(rectPath);
+    pixmapPainter.end();
+
+    QImage img = pixmap.toImage();
+    qt_blurImage(img, 6, false, false);
+
+    pixmap = QPixmap::fromImage(img);
+    QPainter pixmapPainter2(&pixmap);
+    pixmapPainter2.setRenderHint(QPainter::Antialiasing);
+    pixmapPainter2.setCompositionMode(QPainter::CompositionMode_Clear);
+    pixmapPainter2.setPen(Qt::transparent);
+    pixmapPainter2.setBrush(Qt::transparent);
+    pixmapPainter2.drawPath(rectPath);
     p.setOpacity(1);
-    p.setPen(Qt::NoPen);
-    p.drawRoundedRect(opt.rect, 6, 6);
-    p.setRenderHint(QPainter::Antialiasing); //反锯齿
-    setProperty("blurRegion", QRegion(path.toFillPolygon().toPolygon()));
-    style()->drawPrimitive(QStyle::PE_Widget, &opt, &p, this);
+    p.drawPixmap(this->rect(), pixmap, pixmap.rect());
+    p.save();
+    p.fillPath(rectPath, qApp->palette().color(QPalette::Base));
+    p.restore();
     QWidget::paintEvent(event);
 }

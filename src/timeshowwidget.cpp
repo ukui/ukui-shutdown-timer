@@ -13,7 +13,7 @@ void BlankShadowWidget::paintEvent(QPaintEvent *event)
     QPainter p(this);
     QPainterPath path;
     opt.rect.adjust(0,0,0,0);
-    p.setBrush(QBrush(QColor("#48484c")));
+    p.setBrush(opt.palette.color(QPalette::Button));
     p.setOpacity(0.5);
     p.setPen(Qt::NoPen);
     p.drawRoundedRect(opt.rect, 6, 6);
@@ -35,19 +35,14 @@ void timeShowWidget::initMemberVariable()
     this->setContentsMargins(0, 0, 0, 0);
     this->setFixedWidth(372);
     this->setFixedHeight(155);
-    QPalette palette;
-    palette.setColor(QPalette::WindowText,Qt::white);
     m_pHourLabel = new QLabel(QObject::tr("hours"), this);
     m_pHourLabel->setFixedHeight(20);
-    m_pHourLabel->setPalette(palette);
 
     m_pMinuteLabel = new QLabel(QObject::tr("minute"), this);
     m_pMinuteLabel->setFixedHeight(20);
-    m_pMinuteLabel->setPalette(palette);
 
     m_pSeparatedLabel   = new QLabel(":", this);
     m_pSeparatedLabel->setFixedSize(8, 45);
-    m_pSeparatedLabel->setPalette(palette);
 
     m_pHourRollWidget   = new VerticalScroll_60(23, this);
     m_pMinuteRollWidget = new VerticalScroll_60(59, this);

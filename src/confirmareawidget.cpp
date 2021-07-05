@@ -12,10 +12,10 @@ confirmAreaWidget::confirmAreaWidget(QWidget *parent) : QWidget(parent)
 void confirmAreaWidget::initMemberVariable()
 {
     m_pCancelButton = new QPushButton(QObject::tr("Cancel"));
-    m_pCancelButton->setStyle(new CanceButtonStyle("ukui-default"));
+    m_pCancelButton->setProperty("isWindowButton", 0x1);
+    m_pCancelButton->setProperty("useIconHighlightEffect", 0x2);
     m_pCancelButton->setFixedSize(80, 34);
     m_pConfirmButton = new QPushButton(QObject::tr("Confirm"));
-    m_pConfirmButton->setStyle(new ConfirmButtonStyle("ukui-default"));
     m_pConfirmButton->setFixedSize(80, 34);
     m_pconfirmAreaWidgetHLayout = new QHBoxLayout();
     m_pconfirmAreaWidgetHLayout->setSpacing(0);

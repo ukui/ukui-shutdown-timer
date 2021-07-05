@@ -168,11 +168,14 @@ void VerticalScroll_60::paintNum(QPainter &painter, int num, int deviation)
     font.setPixelSize(size);
     painter.setFont(font);
     if (m_bSelectColor) {
-        transparency = 255 * 0.23;
+        transparency = 255 * 0.23 - 10;
     } else {
         transparency = 255 - 255 * qAbs(deviation) / Height;
     }
-    painter.setPen(QColor(255, 255, 255, transparency));
+    QColor color;
+    color = qApp->palette().color(QPalette::PlaceholderText);
+    color.setAlphaF(transparency/100.0);
+    painter.setPen(color);
     if ( y >= 0 && y + height < Height) {
         painter.drawText(QRectF(0, y, Width, height),
                          Qt::AlignCenter,
@@ -185,7 +188,7 @@ void VerticalScroll_60::paintNum(QPainter &painter, int num, int deviation)
 QString VerticalScroll_60::change_NUM_to_str(int alarmHour)
 {
     QString str;
-    if(alarmHour < 10){
+    if (alarmHour < 10) {
         QString hours_str = QString::number(alarmHour);
         str = "0"+hours_str;
     } else {

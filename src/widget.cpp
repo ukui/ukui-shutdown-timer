@@ -1,66 +1,6 @@
 #include "widget.h"
 #include <QPainterPath>
 
-/* 上方Menu界面 */
-menuBarWidget::menuBarWidget(QWidget *parent) : QWidget(parent)
-{
-    initMemberVariable();
-    initLayout();
-}
-
-void menuBarWidget::initMemberVariable()
-{
-    m_pIconLabel   =  new QLabel();                                             // 显示标题图标
-    m_pIconLabel->setFixedSize(24, 24);
-    QIcon icon = QIcon::fromTheme("ukui-time_shutdown", QIcon("://image/time_shutdown.svg"));
-    QPixmap pixmap = icon.pixmap(QSize(24, 24));
-    m_pIconLabel->setPixmap(pixmap);
-
-    // 显示标题文本
-    m_pTileLabel   =  new QLabel();
-    QPalette palette;
-    palette.setColor(QPalette::WindowText, Qt::white);
-    m_pTileLabel->setPalette(palette);
-    m_pTileLabel->setFixedHeight(20);
-    m_pTileLabel->setText(QObject::tr("time-shutdown"));
-
-    // 隐藏按钮
-    m_pHideButton  =  new QPushButton();
-    m_pHideButton->setFixedSize(30, 30);
-    m_pHideButton->setIcon(QIcon::fromTheme("window-minimize-symbolic"));
-
-    // 关闭按钮
-    m_pCloseButton =  new QPushButton();
-    m_pCloseButton->setFixedSize(30, 30);
-    m_pCloseButton->setIcon(QIcon::fromTheme("window-close"));
-
-    m_pHideButton->setStyleSheet("QPushButton{border-image: url(://image/mini_light.png);}"
-                  "QPushButton:hover{border-image: url(://image/mini2.png);}"
-                  "QPushButton:pressed{border-image: url(://image/mini3.png);}");
-    m_pCloseButton->setStyleSheet("QPushButton{border-image: url(://image/close_light.png);}"
-                  "QPushButton:hover{border-image: url(://image/close2.png);}"
-                  "QPushButton:pressed{border-image: url(://image/close3.png);}");
-
-    m_pHBoxLayout  =  new QHBoxLayout();
-    m_pHBoxLayout->setSpacing(0);
-    m_pHBoxLayout->setContentsMargins(12, 0, 4, 0);
-
-    this->setContentsMargins(0, 0, 0, 0);
-    this->setFixedSize(372, 34);
-}
-
-void menuBarWidget::initLayout()
-{
-//    m_pHBoxLayout->addWidget(m_pIconLabel);
-    m_pHBoxLayout->addItem(new QSpacerItem(12, 1));
-    m_pHBoxLayout->addWidget(m_pTileLabel);
-    m_pHBoxLayout->addItem(new QSpacerItem(204, 10, QSizePolicy::Expanding));
-    m_pHBoxLayout->addWidget(m_pHideButton);
-    m_pHBoxLayout->addItem(new QSpacerItem(4, 1));
-    m_pHBoxLayout->addWidget(m_pCloseButton);
-    this->setLayout(m_pHBoxLayout);
-}
-
 /* widget主类 */
 Widget::Widget(QWidget *parent)
     : QWidget(parent)
@@ -74,9 +14,6 @@ Widget::Widget(QWidget *parent)
     // 初始化界面布局
     initLayout();
 
-    // 初始化窗口按钮动作
-    initMenuBarAction();
-
     // 初始化所有成员变量的信号槽
     initSignalSlots();
 
@@ -89,7 +26,7 @@ Widget::Widget(QWidget *parent)
     // 初始化当前的托盘栏图标
     createTrayIcon();
 
-    setIcon(QIcon::fromTheme("ukui-time_shutdown", QIcon("://image/time_shutdown.svg")));
+    setIcon(QIcon::fromTheme("ukui-time-shutdown", QIcon("://image/time_shutdown.svg")));
 
     // 获取保存在gsetting中的定时关机设置状态
     getTimedShutdownState();
@@ -106,7 +43,6 @@ Widget::Widget(QWidget *parent)
     // 初始化下拉框状态
     initDropDownBoxLabelStatus();
 
-    this->setWindowFlag(Qt::FramelessWindowHint);
     this->setAttribute(Qt::WA_TranslucentBackground);
     this->setWindowIcon(QIcon::fromTheme("ukui-time_shutdown", QIcon("://image/time_shutdown.svg")));
 
@@ -127,18 +63,18 @@ void Widget::initTranslation()
     if (m_ptranslator->load(QLocale(), QLatin1String("time-shutdown"), QLatin1String("_"), QLatin1String("/usr/share/ukui-time-shutdown/")))
         QApplication::installTranslator(m_ptranslator);
     else
-        qDebug() << "cannot load translator ukui-clipboard_" << QLocale::system().name() << ".qm!";
+        qDebug() << "cannot load translator ukui-time-shutdown" << QLocale::system().name() << ".qm!";
 
     if (translator_qt->load("/usr/share/qt5/translations/qt_"+QLocale::system().name()))
         QApplication::installTranslator(translator_qt);
     else
-        qDebug() << "cannot load translator ukui-feedback_" << QLocale::system().name() << ".qm!";
+        qDebug() << "cannot load translator ukui-time-shutdown" << QLocale::system().name() << ".qm!";
 }
 
 void Widget::initMemberVariable()
 {
     this->setContentsMargins(0, 0, 0, 0);
-    this->setFixedSize(372, 376);
+    this->setFixedSize(372, 339);
     this->setWindowTitle(QObject::tr("time-shutdown"));
 
     m_pVMainLayout = new QVBoxLayout();
@@ -151,7 +87,7 @@ void Widget::initMemberVariable()
     font.setPixelSize(12);
     m_pTimeRemainLabel->setFont(font);
     QPalette RemainLabelpalette;
-    RemainLabelpalette.setColor(QPalette::WindowText,Qt::white);
+    RemainLabelpalette.setColor(QPalette::WindowText,qApp->palette().color(QPalette::PlaceholderText));
     m_pTimeRemainLabel->setPalette(RemainLabelpalette);
     m_pTimeRemainLabel->setAlignment(Qt::AlignHCenter);
     m_pTimeRemainLabel->setFixedHeight(18);
@@ -165,13 +101,13 @@ void Widget::initMemberVariable()
 
     // 初始化透明窗口
     m_pTransparentWidget = new QWidget();
-    m_pTransparentWidget->move(120, 119);
+    m_pTransparentWidget->move(116, 82);
     m_pTransparentWidget->setAttribute(Qt::WA_TranslucentBackground);
-    m_pTransparentWidget->setFixedSize(372, 155);
+    m_pTransparentWidget->setFixedSize(380, 155);
 
-    m_pMenuBarWidget     = new menuBarWidget();
     m_pComBoxWidget      = new comBoxWidget(this);
     m_pDropDownBox       = new dropdownbox();
+//    m_pDropDownBox->setStyleSheet("QWidget{border: 1px solid rgba(255,0,0,1);}");
     m_pConfirmAreaWidget = new confirmAreaWidget();
     m_pTimeShowWidget    = new timeShowWidget();
     m_pBlankShadowWidget = new BlankShadowWidget(this);
@@ -179,11 +115,11 @@ void Widget::initMemberVariable()
 
 void Widget::initLayout()
 {
-    m_pBlankShadowWidget->move(30, 178);
-    m_pComBoxWidget->move(30, 60);
+//    this->setStyleSheet("QWidget{border: 1px solid rgba(255, 0, 0, 1);}");
+    m_pBlankShadowWidget->move(30, 145);
+    m_pComBoxWidget->move(30, 22);
 
-    m_pVMainLayout->addWidget(m_pMenuBarWidget);
-    m_pVMainLayout->addItem(new QSpacerItem(10, 82));
+    m_pVMainLayout->addItem(new QSpacerItem(10, 81));
     m_pVMainLayout->addWidget(m_pTimeShowWidget);
     m_pVMainLayout->addItem(new QSpacerItem(10, 16));
     m_pVMainLayout->addWidget(m_pTimeRemainLabel);
@@ -193,20 +129,9 @@ void Widget::initLayout()
     this->setLayout(m_pVMainLayout);
     m_pTransparentWidget->setParent(this);
     m_pDropDownBox->setParent(this);
-    m_pDropDownBox->move(30, 96);
+    m_pDropDownBox->move(24, 53);
     m_pDropDownBox->setVisible(false);
     return;
-}
-
-void Widget::initMenuBarAction()
-{
-    connect(m_pMenuBarWidget->m_pHideButton, &QPushButton::clicked, this, [=](){
-        this->showMinimized();
-    });
-    connect(m_pMenuBarWidget->m_pCloseButton, &QPushButton::clicked, this, [=](){
-        this->close();
-        m_bShowFlag = true;
-    });
 }
 
 void Widget::initSignalSlots()
@@ -311,8 +236,11 @@ void Widget::getShutDownTime()
         return;
     }
     QStringList timeList = m_pShowDownTime.split(":");
-    m_Hours  = QString(timeList.at(0)).toInt();
-    m_Minute = QString(timeList.at(1)).toInt();
+    qDebug() << "timeList---->" << timeList.count();
+    if (timeList.count() > 1) {
+        m_Hours  = QString(timeList.at(0)).toInt();
+        m_Minute = QString(timeList.at(1)).toInt();
+    }
     return;
 }
 
@@ -342,6 +270,7 @@ void Widget::initTimeShutdownWidget()
         m_pTimeShowWidget->m_pHourRollWidget->update();
         m_pTimeShowWidget->m_pMinuteRollWidget->update();
         m_pTransparentWidget->setVisible(true);                                 // 置时间调试界面为不可滚动
+        m_pBlankShadowWidget->setVisible(true);
         m_pShowDownTime = QStringLiteral("%1:%2").arg(m_Hours).arg(m_Minute);
         m_pConfirmAreaWidget->m_pConfirmButton->setEnabled(false);
     } else {
@@ -355,6 +284,7 @@ void Widget::initTimeShutdownWidget()
         m_pTimeShowWidget->m_pHourRollWidget->update();
         m_pTimeShowWidget->m_pMinuteRollWidget->update();
         m_pTransparentWidget->setVisible(false);
+        m_pBlankShadowWidget->setVisible(false);
     }
     return;
 }
@@ -588,25 +518,25 @@ void Widget::paintEvent(QPaintEvent *event)
     QPainterPath path;
     opt.rect.adjust(0,0,0,0);
 
-    p.setBrush(QBrush(QColor("#131314")));
+    p.setBrush(opt.palette.color(QPalette::Base));
     p.setOpacity(1);
     p.setPen(Qt::NoPen);
     p.setRenderHint(QPainter::Antialiasing); //反锯齿
-    p.drawRoundedRect(opt.rect, 10, 10);
-    path.addRoundedRect(opt.rect, 10, 10);
+    p.drawRoundedRect(opt.rect, 0, 0);
+    path.addRoundedRect(opt.rect, 0, 0);
     QRegion Region(path.toFillPolygon().toPolygon());
     setProperty("blurRegion", Region);
     style()->drawPrimitive(QStyle::PE_Widget, &opt, &p, this);
     QWidget::paintEvent(event);
 }
 
-void Widget::mousePressEvent(QMouseEvent *event)
-{
-    if (event->pos().x() < 30 || event->x() > 342 || event->pos().y() < 60 || event->pos().y() > 94 ) {
-        m_pDropDownBox->setVisible(false);
-    }
-    QWidget::mousePressEvent(event);
-}
+//void Widget::mousePressEvent(QMouseEvent *event)
+//{
+//    if (event->pos().x() < 30 || event->x() > 342 || event->pos().y() < 60 || event->pos().y() > 94 ) {
+//        m_pDropDownBox->setVisible(false);
+//    }
+//    QWidget::mousePressEvent(event);
+//}
 
 void Widget::dropDownBoxShowHideSlots()
 {
@@ -659,6 +589,7 @@ void Widget::confirmButtonSlots()
     m_pTimeShowWidget->m_pHourRollWidget->update();
     m_pTimeShowWidget->m_pMinuteRollWidget->update();
     m_pTransparentWidget->setVisible(true);                // 置时间调试界面为不可滚动
+    m_pBlankShadowWidget->setVisible(true);
     m_pShowDownTime.clear();
     m_Hours  = m_pTimeShowWidget->m_pHourRollWidget->readValue();
     m_Minute = m_pTimeShowWidget->m_pMinuteRollWidget->readValue();
@@ -685,6 +616,7 @@ void Widget::canceButtonSlots()
     m_pTimeShowWidget->m_pHourRollWidget->update();
     m_pTimeShowWidget->m_pMinuteRollWidget->update();
     m_pTransparentWidget->setVisible(false);                // 置时间调试界面为可滚动
+    m_pBlankShadowWidget->setVisible(false);
     setShutDownTimeValue(m_pShowDownTime);
     setFrequencyValue(m_WeekSelect);
     QString str = tr("never");

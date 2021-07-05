@@ -7,9 +7,10 @@
 #include <QFont>
 #include <QStyleOption>
 #include <QPainter>
+#include <QApplication>
 #include "verticalscroll60.h"
 
-/* 含有底色无控件的窗体类 */
+/* 含有底色无控件的窗体类,中间选中条目底色 */
 class BlankShadowWidget : public QWidget
 {
     Q_OBJECT
