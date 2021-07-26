@@ -1,3 +1,12 @@
+time-shutdown (1.1.0-1-00011) v101; urgency=medium
+
+  * 改动：
+    bug号：无
+    需求号：45396
+    其余改动：1、修改changlog；2、修改标题栏图标，改成之前闹钟图标；3、修改提示多长关机lable进行主题切换后，字体未跟随主题切换
+
+ -- liushanwen <liushanwen@kylinos.cn>  Mon, 26 Jul 2021 16:16:55 +0800
+
 time-shutdown (1.1.0-1-00010) v101; urgency=medium
 
   * 改动：
