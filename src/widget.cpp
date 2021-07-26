@@ -26,7 +26,7 @@ Widget::Widget(QWidget *parent)
     // 初始化当前的托盘栏图标
     createTrayIcon();
 
-    setIcon(QIcon::fromTheme("ukui-time-shutdown", QIcon("://image/time_shutdown.svg")));
+    setIcon(QIcon::fromTheme("kylin-alarm-clock", QIcon("://image/time_shutdown.svg")));
 
     // 获取保存在gsetting中的定时关机设置状态
     getTimedShutdownState();
@@ -44,7 +44,7 @@ Widget::Widget(QWidget *parent)
     initDropDownBoxLabelStatus();
 
     this->setAttribute(Qt::WA_TranslucentBackground);
-    this->setWindowIcon(QIcon::fromTheme("ukui-time_shutdown", QIcon("://image/time_shutdown.svg")));
+    this->setWindowIcon(QIcon::fromTheme("kylin-alarm-clock", QIcon("://image/time_shutdown.svg")));
 
     QDesktopWidget *pDesk = QApplication::desktop();
     move((pDesk->width() - this->width()) / 2, (pDesk->height() - this->height()) / 2);
@@ -91,6 +91,9 @@ void Widget::initMemberVariable()
     m_pTimeRemainLabel->setPalette(RemainLabelpalette);
     m_pTimeRemainLabel->setAlignment(Qt::AlignHCenter);
     m_pTimeRemainLabel->setFixedHeight(18);
+
+    /* 监听主题变化，修改提示关机时间Label字体颜色 */
+    initRemainLableFnotGsetting();
 
     m_traslate                      = QObject::tr("next shutdown");
     m_traslateHours                 = QObject::tr("hour");
@@ -167,6 +170,25 @@ void Widget::initGsetting()
         qDebug() << "当前的gsetting的key值" << m_pTimeShutdown->keys();
     }
     return;
+}
+
+/* 监听主题变化，修改提示关机时间Label字体颜色 */
+void Widget::initRemainLableFnotGsetting()
+{
+    const QByteArray id(ORG_UKUI_STYLE);
+    if (QGSettings::isSchemaInstalled(id)) {
+        m_pGsettingFont = new QGSettings(id);
+        if (m_pGsettingFont) {
+            connect(m_pGsettingFont, &QGSettings::changed, this, [=](QString keyName) {
+                if (keyName == "styleName") {
+                    QPalette RemainLabelpalette;
+                    RemainLabelpalette.setColor(QPalette::WindowText,qApp->palette().color(QPalette::PlaceholderText));
+                    m_pTimeRemainLabel->setPalette(RemainLabelpalette);
+                    m_pTimeRemainLabel->update();
+                }
+            });
+        }
+    }
 }
 
 void Widget::createActions()

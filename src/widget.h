@@ -31,7 +31,7 @@
 #include "dropdownbox.h"
 
 #define UKUITIMESHUTDOWN "org.ukui.time-shutdwon.settings"
-
+#define ORG_UKUI_STYLE            "org.ukui.style"
 /* app主类 */
 class Widget : public QWidget
 {
@@ -56,6 +56,7 @@ private:
 
     // getstting初始化、值获取、 设置getsetting值
     void initGsetting();
+    void initRemainLableFnotGsetting();
     void getComBoxShutdownFrequency();
     void getShutDownTime();
     bool getTimedShutdownState();
@@ -85,6 +86,7 @@ private:
     QTimer      *m_pMonitorTime             = nullptr;
     QWidget     *m_pTransparentWidget       = nullptr;
     QGSettings  *m_pTimeShutdown            = nullptr;
+    QGSettings  *m_pGsettingFont            = nullptr;
     QString m_traslate;
     QString m_traslateHours;
     QString m_traslateMinute;
