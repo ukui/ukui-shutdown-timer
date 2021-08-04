@@ -29,8 +29,8 @@ time-shutdown (1.1.0-1-0009) v101; urgency=medium
 
   * 改动：
     bug号：无
-	需求号：无
-	其余改动：修改下拉框QListWidget滚动条有白色底色问题
+    需求号：无
+    其余改动：修改下拉框QListWidget滚动条有白色底色问题
 
  -- liushanwen <liushanwen@kylinos.cn>  Wed, 23 Jun 2021 21:13:53 +0800
 
