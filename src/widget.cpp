@@ -619,9 +619,23 @@ void Widget::updatedropDownBoxSelectSlots(const QModelIndex &index)
 void Widget::confirmButtonSlots()
 {
     setShutdownFrequency(m_WeekSelect);
-    QString str = tr("never");
+    QString str = QObject::tr("never");
     if (!m_WeekSelect.compare(str)) {
         QMessageBox::warning(NULL, tr("warning"), tr("no set shutdown"), QMessageBox::Ok );
+    }
+
+    QDateTime current_date_time = QDateTime::currentDateTime();
+    m_pShowDownTime.clear();
+    m_Hours  = m_pTimeShowWidget->m_pHourRollWidget->readValue();
+    m_Minute = m_pTimeShowWidget->m_pMinuteRollWidget->readValue();
+    m_pShowDownTime = QStringLiteral("%1:%2").arg(m_Hours).arg(m_Minute);
+    QString onlyThisShutdown = QObject::tr("Only this shutdown");
+    if (m_WeekSelect.compare(onlyThisShutdown) == 0 &&
+            QString::compare( m_pShowDownTime, current_date_time.toString("hh:mm")) < 0) {
+        QMessageBox::warning(NULL, tr("warning"), \
+                             tr("The shutdown time is shorter than the current time"), \
+                             QMessageBox::Ok );
+        return;
     }
     m_timeShotdown = getTimedShutdownState();
     if (!m_timeShotdown) {
@@ -634,12 +648,7 @@ void Widget::confirmButtonSlots()
     m_pTimeShowWidget->m_pMinuteRollWidget->update();
     m_pTransparentWidget->setVisible(true);                // 置时间调试界面为不可滚动
     m_pBlankShadowWidget->setVisible(true);
-    m_pShowDownTime.clear();
-    m_Hours  = m_pTimeShowWidget->m_pHourRollWidget->readValue();
-    m_Minute = m_pTimeShowWidget->m_pMinuteRollWidget->readValue();
-    m_pShowDownTime = QStringLiteral("%1:%2").arg(m_Hours).arg(m_Minute);
     qDebug() << "当前的设置的关机时间---->" << m_pShowDownTime;
-
     // 设置关机频率
     setTimeShutdownValue(true);
     setShutDownTimeValue(m_pShowDownTime);

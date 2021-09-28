@@ -21,8 +21,6 @@
  */
 
 #include "confirmareawidget.h"
-#include "CanceButtonStyle.h"
-#include "ConfirmButtonStyle.h"
 
 confirmAreaWidget::confirmAreaWidget(QWidget *parent) : QWidget(parent)
 {
