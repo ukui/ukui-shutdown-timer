@@ -136,6 +136,7 @@ private:
 
 protected:
     void closeEvent(QCloseEvent *event);
+    void mousePressEvent(QMouseEvent *event);
     void paintEvent(QPaintEvent *event);
 
 public slots:

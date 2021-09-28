@@ -554,6 +554,20 @@ void Widget::closeEvent(QCloseEvent *event)
     }
 }
 
+void Widget::mousePressEvent(QMouseEvent *event)
+{
+    Q_UNUSED(event)
+    if (!(event->pos().x() > 30 &&
+         event->x() < 342 &&
+         event->pos().y() > 22 &&
+         event->pos().y() < 56) &&
+            m_pDropDownBox->isVisible()) {
+        m_pDropDownBox->setVisible(false);
+    }
+    QWidget::mouseReleaseEvent(event);
+    return;
+}
+
 void Widget::paintEvent(QPaintEvent *event)
 {
     QStyleOption opt;
@@ -573,14 +587,6 @@ void Widget::paintEvent(QPaintEvent *event)
     style()->drawPrimitive(QStyle::PE_Widget, &opt, &p, this);
     QWidget::paintEvent(event);
 }
-
-//void Widget::mousePressEvent(QMouseEvent *event)
-//{
-//    if (event->pos().x() < 30 || event->x() > 342 || event->pos().y() < 60 || event->pos().y() > 94 ) {
-//        m_pDropDownBox->setVisible(false);
-//    }
-//    QWidget::mousePressEvent(event);
-//}
 
 void Widget::dropDownBoxShowHideSlots()
 {

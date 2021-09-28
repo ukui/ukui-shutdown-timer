@@ -28,6 +28,8 @@ extern void qt_blurImage(QImage &blurImage, qreal radius, bool quality, int tran
 
 dateSelectionWidget::dateSelectionWidget(QString week, QWidget *parent) : QWidget(parent)
 {
+    /* 安装事件过滤器 */
+    installEventFilter(this);
     m_pweekLabel = new QLabel();
     QPalette palette = m_pweekLabel->palette();
     palette.setColor(QPalette::WindowText,Qt::white);
@@ -41,6 +43,7 @@ dateSelectionWidget::dateSelectionWidget(QString week, QWidget *parent) : QWidge
     QIcon labelIcon = QIcon::fromTheme("object-select-symbolic");
     m_pselectedLabelIcon->setPixmap(labelIcon.pixmap(QSize(16, 16)));
     m_pselectedLabelIcon->setVisible(false);
+    m_pselectedLabelIcon->setProperty("useIconHighlightEffect", 0x8);
     m_pHWeekLayout = new QHBoxLayout();
     m_pHWeekLayout->setContentsMargins(17, 0, 0, 0);
     m_pHWeekLayout->addWidget(m_pweekLabel);
@@ -187,6 +190,30 @@ QStringList dropdownbox::traverseListWidget()
         cleanWeekday();
     qDebug() << "当前的字符串" << WeekStringList;
     return WeekStringList;
+}
+
+/* 事件过滤器 */
+bool dropdownbox::eventFilter(QObject *obj, QEvent *event)
+{
+
+    if (obj == this) {
+        if (event->type() == QEvent::WindowDeactivate) {
+            this->setEnabled(false);
+            return true;
+        }
+    }
+    return false;
+}
+
+bool dropdownbox::event(QEvent *event)
+{
+    qDebug() << "---------------------------->" << event->type();
+    if (event->type() == QEvent::ActivationChange) {
+        if (QApplication::activeWindow() != this) {
+            this->close();
+        }
+     }
+     return QWidget::event(event);
 }
 
 void dropdownbox::paintEvent(QPaintEvent *event)

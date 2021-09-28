@@ -81,6 +81,8 @@ public:
 
 protected:
     void paintEvent(QPaintEvent *event);
+    bool eventFilter(QObject *obj, QEvent *event);
+    bool event(QEvent *event);
 };
 
 #endif // DROPDOWNBOX_H
