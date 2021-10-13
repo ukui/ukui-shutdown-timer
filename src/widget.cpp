@@ -630,18 +630,22 @@ void Widget::confirmButtonSlots()
         QMessageBox::warning(NULL, tr("warning"), tr("no set shutdown"), QMessageBox::Ok );
     }
 
-    QDateTime current_date_time = QDateTime::currentDateTime();
+    QTime current_time = QTime::currentTime();
+    int currentHours = current_time.hour();
+    int currentMinute = current_time.minute();
     m_pShowDownTime.clear();
     m_Hours  = m_pTimeShowWidget->m_pHourRollWidget->readValue();
     m_Minute = m_pTimeShowWidget->m_pMinuteRollWidget->readValue();
     m_pShowDownTime = QStringLiteral("%1:%2").arg(m_Hours).arg(m_Minute);
     QString onlyThisShutdown = QObject::tr("Only this shutdown");
-    if (m_WeekSelect.compare(onlyThisShutdown) == 0 &&
-            QString::compare( m_pShowDownTime, current_date_time.toString("hh:mm")) < 0) {
-        QMessageBox::warning(NULL, tr("warning"), \
-                             tr("The shutdown time is shorter than the current time"), \
-                             QMessageBox::Ok );
-        return;
+
+    if (m_WeekSelect.compare(onlyThisShutdown) == 0) {
+        if (m_Hours < currentHours || (currentHours == m_Hours && m_Minute < currentMinute)) {
+            QMessageBox::warning(NULL, tr("warning"), \
+                                 tr("The shutdown time is shorter than the current time"), \
+                                 QMessageBox::Ok);
+            return;
+        }
     }
     m_timeShotdown = getTimedShutdownState();
     if (!m_timeShotdown) {
