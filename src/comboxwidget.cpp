@@ -33,16 +33,17 @@ comBoxWidget::comBoxWidget(QWidget *parent) : QWidget(parent)
 void comBoxWidget::initMemberVariable()
 {
     m_pLabel_1 = new QLabel();
-    QFont font  = m_pLabel_1->font();
-    font.setPixelSize(14);
-    m_pLabel_1->setFont(font);
+    m_pLabel_1->setAlignment(Qt::AlignVCenter);
+//    QFont font  = m_pLabel_1->font();
+//    font.setPixelSize(14);
+//    m_pLabel_1->setFont(font);
     m_pLabel_1->setText(QObject::tr("Shutdown"));
-    m_pLabel_1->setFixedHeight(20);
+//    m_pLabel_1->setFixedHeight(20);
 
     m_pLabel_2 = new QLabel();
-    m_pLabel_2->setAlignment(Qt::AlignRight);
-    m_pLabel_2->setFont(font);
-    m_pLabel_2->setFixedHeight(20);
+    m_pLabel_2->setAlignment(Qt::AlignRight | Qt::AlignVCenter);
+//    m_pLabel_2->setFont(font);
+//    m_pLabel_2->setFixedHeight(20);
     m_pLabel_2->setFixedWidth(178);
 
     m_pLabel_3 = new QLabel();
@@ -51,18 +52,18 @@ void comBoxWidget::initMemberVariable()
 
     m_pHcomBoxWidgetLayout = new QHBoxLayout();
     m_pHcomBoxWidgetLayout->setSpacing(0);
-    m_pHcomBoxWidgetLayout->setContentsMargins(0, 7, 0, 7);
+    m_pHcomBoxWidgetLayout->setContentsMargins(0, 5, 0, 5);
     this->setContentsMargins(0, 0, 0, 0);
 }
 
 void comBoxWidget::initLayout()
 {
     m_pHcomBoxWidgetLayout->addItem(new QSpacerItem(16, 10));
-    m_pHcomBoxWidgetLayout->addWidget(m_pLabel_1);
+    m_pHcomBoxWidgetLayout->addWidget(m_pLabel_1, Qt::AlignVCenter);
     m_pHcomBoxWidgetLayout->addItem(new QSpacerItem(14, 10));
-    m_pHcomBoxWidgetLayout->addWidget(m_pLabel_2);
+    m_pHcomBoxWidgetLayout->addWidget(m_pLabel_2, Qt::AlignVCenter);
     m_pHcomBoxWidgetLayout->addItem(new QSpacerItem(16, 10));
-    m_pHcomBoxWidgetLayout->addWidget(m_pLabel_3);
+    m_pHcomBoxWidgetLayout->addWidget(m_pLabel_3, Qt::AlignVCenter);
     this->setLayout(m_pHcomBoxWidgetLayout);
 }
 

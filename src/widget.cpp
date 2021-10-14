@@ -665,7 +665,7 @@ void Widget::confirmButtonSlots()
     setFrequencyValue(m_WeekSelect);
     m_pConfirmAreaWidget->m_pConfirmButton->setEnabled(false);
     m_pTimeRemainLabel->setVisible(true);
-
+    m_pComBoxWidget->setEnabled(false);
     // 断开点击Combox展示下拉框的 信号 槽
     disconnect(m_pComBoxWidget, &comBoxWidget::comBoxWidgetClicked, this, &Widget::dropDownBoxShowHideSlots);
     return;
@@ -691,6 +691,7 @@ void Widget::canceButtonSlots()
     m_pConfirmAreaWidget->m_pConfirmButton->setEnabled(true);
     m_pTimeRemainLabel->setVisible(false);
     // 重新连接点击Combox展示下拉框的 信号 槽
+    m_pComBoxWidget->setEnabled(true);
     connect(m_pComBoxWidget, &comBoxWidget::comBoxWidgetClicked, this, &Widget::dropDownBoxShowHideSlots);
     return;
 }

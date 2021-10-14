@@ -58,10 +58,10 @@ void timeShowWidget::initMemberVariable()
     this->setFixedWidth(372);
     this->setFixedHeight(155);
     m_pHourLabel = new QLabel(QObject::tr("hours"), this);
-    m_pHourLabel->setFixedHeight(20);
+//    m_pHourLabel->setFixedHeight(20);
 
     m_pMinuteLabel = new QLabel(QObject::tr("minute"), this);
-    m_pMinuteLabel->setFixedHeight(20);
+//    m_pMinuteLabel->setFixedHeight(20);
 
     m_pSeparatedLabel   = new QLabel(":", this);
     m_pSeparatedLabel->setFixedSize(8, 45);
@@ -84,11 +84,11 @@ void timeShowWidget::setLabelFont()
 {
     QFont font = m_pHourLabel->font();
     font.setPixelSize(14);
-    m_pHourLabel->setFont(font);
+//    m_pHourLabel->setFont(font);
 
     font = m_pMinuteLabel->font();
     font.setPixelSize(14);
-    m_pHourLabel->setFont(font);
+//    m_pHourLabel->setFont(font);
 
     font = m_pSeparatedLabel->font();
     font.setPixelSize(30);
