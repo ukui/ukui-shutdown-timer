@@ -6,8 +6,6 @@ SOURCES += \
     $$PWD/timeshowwidget.cpp \
     $$PWD/widget.cpp  \
     $$PWD/verticalscroll60.cpp \
-    $$PWD/CanceButtonStyle.cpp \
-    $$PWD/ConfirmButtonStyle.cpp \
     $$PWD/qtsingleapplication.cpp \
     $$PWD/qtlocalpeer.cpp \
     $$PWD/qtlockedfile.cpp \
@@ -21,8 +19,6 @@ HEADERS += \
     $$PWD/timeshowwidget.h \
     $$PWD/widget.h \
     $$PWD/verticalscroll60.h \
-    $$PWD/CanceButtonStyle.h \
-    $$PWD/ConfirmButtonStyle.h \
     $$PWD/qtsingleapplication.h \
     $$PWD/qtlocalpeer.h \
     $$PWD/qtlockedfile.h \

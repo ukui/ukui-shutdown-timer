@@ -1,3 +1,25 @@
+/*
+ * Ukui-shutdown-timer
+ *
+ * Copyright (C) 2020, KylinSoft Co., Ltd.
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ *
+ * Authors:  liushanwen <liushanwen@kylinos.cn>
+ *
+ */
+
 #include "dropdownbox.h"
 #include <QPainterPath>
 #include <QApplication>
@@ -6,6 +28,8 @@ extern void qt_blurImage(QImage &blurImage, qreal radius, bool quality, int tran
 
 dateSelectionWidget::dateSelectionWidget(QString week, QWidget *parent) : QWidget(parent)
 {
+    /* 安装事件过滤器 */
+    installEventFilter(this);
     m_pweekLabel = new QLabel();
     QPalette palette = m_pweekLabel->palette();
     palette.setColor(QPalette::WindowText,Qt::white);
@@ -19,6 +43,7 @@ dateSelectionWidget::dateSelectionWidget(QString week, QWidget *parent) : QWidge
     QIcon labelIcon = QIcon::fromTheme("object-select-symbolic");
     m_pselectedLabelIcon->setPixmap(labelIcon.pixmap(QSize(16, 16)));
     m_pselectedLabelIcon->setVisible(false);
+    m_pselectedLabelIcon->setProperty("useIconHighlightEffect", 0x8);
     m_pHWeekLayout = new QHBoxLayout();
     m_pHWeekLayout->setContentsMargins(17, 0, 0, 0);
     m_pHWeekLayout->addWidget(m_pweekLabel);
@@ -165,6 +190,30 @@ QStringList dropdownbox::traverseListWidget()
         cleanWeekday();
     qDebug() << "当前的字符串" << WeekStringList;
     return WeekStringList;
+}
+
+/* 事件过滤器 */
+bool dropdownbox::eventFilter(QObject *obj, QEvent *event)
+{
+
+    if (obj == this) {
+        if (event->type() == QEvent::WindowDeactivate) {
+            this->setEnabled(false);
+            return true;
+        }
+    }
+    return false;
+}
+
+bool dropdownbox::event(QEvent *event)
+{
+    qDebug() << "---------------------------->" << event->type();
+    if (event->type() == QEvent::ActivationChange) {
+        if (QApplication::activeWindow() != this) {
+            this->close();
+        }
+     }
+     return QWidget::event(event);
 }
 
 void dropdownbox::paintEvent(QPaintEvent *event)

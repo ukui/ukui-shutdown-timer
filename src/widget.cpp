@@ -1,3 +1,25 @@
+/*
+ * Ukui-shutdown-timer
+ *
+ * Copyright (C) 2020, KylinSoft Co., Ltd.
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ *
+ * Authors:  liushanwen <liushanwen@kylinos.cn>
+ *
+ */
+
 #include "widget.h"
 #include <QPainterPath>
 
@@ -532,6 +554,20 @@ void Widget::closeEvent(QCloseEvent *event)
     }
 }
 
+void Widget::mousePressEvent(QMouseEvent *event)
+{
+    Q_UNUSED(event)
+    if (!(event->pos().x() > 30 &&
+         event->x() < 342 &&
+         event->pos().y() > 22 &&
+         event->pos().y() < 56) &&
+            m_pDropDownBox->isVisible()) {
+        m_pDropDownBox->setVisible(false);
+    }
+    QWidget::mouseReleaseEvent(event);
+    return;
+}
+
 void Widget::paintEvent(QPaintEvent *event)
 {
     QStyleOption opt;
@@ -551,14 +587,6 @@ void Widget::paintEvent(QPaintEvent *event)
     style()->drawPrimitive(QStyle::PE_Widget, &opt, &p, this);
     QWidget::paintEvent(event);
 }
-
-//void Widget::mousePressEvent(QMouseEvent *event)
-//{
-//    if (event->pos().x() < 30 || event->x() > 342 || event->pos().y() < 60 || event->pos().y() > 94 ) {
-//        m_pDropDownBox->setVisible(false);
-//    }
-//    QWidget::mousePressEvent(event);
-//}
 
 void Widget::dropDownBoxShowHideSlots()
 {
@@ -597,9 +625,27 @@ void Widget::updatedropDownBoxSelectSlots(const QModelIndex &index)
 void Widget::confirmButtonSlots()
 {
     setShutdownFrequency(m_WeekSelect);
-    QString str = tr("never");
+    QString str = QObject::tr("never");
     if (!m_WeekSelect.compare(str)) {
         QMessageBox::warning(NULL, tr("warning"), tr("no set shutdown"), QMessageBox::Ok );
+    }
+
+    QTime current_time = QTime::currentTime();
+    int currentHours = current_time.hour();
+    int currentMinute = current_time.minute();
+    m_pShowDownTime.clear();
+    m_Hours  = m_pTimeShowWidget->m_pHourRollWidget->readValue();
+    m_Minute = m_pTimeShowWidget->m_pMinuteRollWidget->readValue();
+    m_pShowDownTime = QStringLiteral("%1:%2").arg(m_Hours).arg(m_Minute);
+    QString onlyThisShutdown = QObject::tr("Only this shutdown");
+
+    if (m_WeekSelect.compare(onlyThisShutdown) == 0) {
+        if (m_Hours < currentHours || (currentHours == m_Hours && m_Minute <= currentMinute)) {
+            QMessageBox::warning(NULL, tr("warning"), \
+                                 tr("The shutdown time is shorter than the current time"), \
+                                 QMessageBox::Ok);
+            return;
+        }
     }
     m_timeShotdown = getTimedShutdownState();
     if (!m_timeShotdown) {
@@ -612,19 +658,14 @@ void Widget::confirmButtonSlots()
     m_pTimeShowWidget->m_pMinuteRollWidget->update();
     m_pTransparentWidget->setVisible(true);                // 置时间调试界面为不可滚动
     m_pBlankShadowWidget->setVisible(true);
-    m_pShowDownTime.clear();
-    m_Hours  = m_pTimeShowWidget->m_pHourRollWidget->readValue();
-    m_Minute = m_pTimeShowWidget->m_pMinuteRollWidget->readValue();
-    m_pShowDownTime = QStringLiteral("%1:%2").arg(m_Hours).arg(m_Minute);
     qDebug() << "当前的设置的关机时间---->" << m_pShowDownTime;
-
     // 设置关机频率
     setTimeShutdownValue(true);
     setShutDownTimeValue(m_pShowDownTime);
     setFrequencyValue(m_WeekSelect);
     m_pConfirmAreaWidget->m_pConfirmButton->setEnabled(false);
     m_pTimeRemainLabel->setVisible(true);
-
+    m_pComBoxWidget->setEnabled(false);
     // 断开点击Combox展示下拉框的 信号 槽
     disconnect(m_pComBoxWidget, &comBoxWidget::comBoxWidgetClicked, this, &Widget::dropDownBoxShowHideSlots);
     return;
@@ -650,6 +691,7 @@ void Widget::canceButtonSlots()
     m_pConfirmAreaWidget->m_pConfirmButton->setEnabled(true);
     m_pTimeRemainLabel->setVisible(false);
     // 重新连接点击Combox展示下拉框的 信号 槽
+    m_pComBoxWidget->setEnabled(true);
     connect(m_pComBoxWidget, &comBoxWidget::comBoxWidgetClicked, this, &Widget::dropDownBoxShowHideSlots);
     return;
 }
