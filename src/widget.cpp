@@ -640,7 +640,7 @@ void Widget::confirmButtonSlots()
     QString onlyThisShutdown = QObject::tr("Only this shutdown");
 
     if (m_WeekSelect.compare(onlyThisShutdown) == 0) {
-        if (m_Hours < currentHours || (currentHours == m_Hours && m_Minute < currentMinute)) {
+        if (m_Hours < currentHours || (currentHours == m_Hours && m_Minute <= currentMinute)) {
             QMessageBox::warning(NULL, tr("warning"), \
                                  tr("The shutdown time is shorter than the current time"), \
                                  QMessageBox::Ok);
