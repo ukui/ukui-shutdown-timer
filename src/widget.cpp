@@ -638,7 +638,7 @@ void Widget::confirmButtonSlots()
     m_Minute = m_pTimeShowWidget->m_pMinuteRollWidget->readValue();
     m_pShowDownTime = QStringLiteral("%1:%2").arg(m_Hours).arg(m_Minute);
     QString onlyThisShutdown = QObject::tr("Only this shutdown");
-
+    qDebug() << m_Hours << m_Minute << "currentHours:" << currentHours << "currentMinute:" << currentMinute;
     if (m_WeekSelect.compare(onlyThisShutdown) == 0) {
         if (m_Hours < currentHours || (currentHours == m_Hours && m_Minute <= currentMinute)) {
             QMessageBox::warning(NULL, tr("warning"), \
@@ -700,10 +700,13 @@ void Widget::threadSlots()
 {
     QTime time = QTime::currentTime();
     int timeS = time.second();
-    QDateTime current_date_time = QDateTime::currentDateTime();
+    QTime current_time = QTime::currentTime();
+    int currentHours = current_time.hour();
+    int currentMinute = current_time.minute();
+    QString s_currentTime = QStringLiteral("%1:%2").arg(currentHours).arg(currentMinute);
     m_timeShotdown = getTimedShutdownState();
     setNextShutDownTime();
-    if (m_timeShotdown && current_date_time.toString("hh:mm") == m_pShowDownTime && timeS == 0) {
+    if (m_timeShotdown && s_currentTime == m_pShowDownTime && timeS == 0) {
         QProcess p(0);
         p.startDetached("ukui-session-tools");
         p.waitForStarted();
