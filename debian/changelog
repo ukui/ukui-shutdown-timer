@@ -1,8 +1,11 @@
-time-shutdown (1.1.0-1-0018) v101; urgency=medium
+time-shutdown (1.1.1-1) unstable; urgency=medium
 
-  * 改动：
-    bug号：85471
-    需求号：无
-    其余改动: 无
+  * New upstream release.
 
- -- liushanwen <liushanwen@kylinos.cn>  Fri, 15 Oct 2021 16:47:18 +0800
+ -- Allen <zouchang@kylinos.cn>  Thu, 04 Nov 2021 17:15:11 +0800
+
+time-shutdown (1.1.0-1) unstable; urgency=medium
+
+  * Initial release.
+
+ -- handsome_feng <jianfengli@ubuntukylin.com>  Mon, 09 Aug 2021 19:29:36 +0800
